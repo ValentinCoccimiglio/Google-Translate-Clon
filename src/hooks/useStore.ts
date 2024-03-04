@@ -56,8 +56,41 @@ const initialState = {
 
   export function useStore () {
     const [{
-        fromLanguage
+        fromLanguage,
+        toLagnuage,
+        fromText,
+        result,
+        loading
     }, dispatch] = useReducer(reducer, initialState)
-    const [state, dispatch] = useReducer (reducer, initialState)
+
+    const interchangeLanguages = () => {
+      dispatch({ type: 'INTERCHANGE_LANGUAGES'})
+    }
+
+    const setFromLanguage = (payload: string) => {
+      dispatch ({ type: 'SET_FROM_LANGUAGE', payload: 'es'})
+    }
+
+    const setToLanguage = ( payload: string) => {
+      dispatch({ type: 'SET_TO_LANGUAGE'})
+    }
+
+    const setFromText = (payload: string) => {
+      dispatch({ type: 'SET_FROM_TEXT'})
+    }
+
+    const setResult = (payload: string) => {
+      dispatch({ type: 'SET_RESULT'})
+    }
+ 
+    return{
+      fromLanguage,
+      toLagnuage,
+      fromText,
+      result,
+      loading,
+      interchangeLanguages,
+      
+    }
   
   }
