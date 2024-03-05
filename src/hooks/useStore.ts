@@ -1,5 +1,7 @@
-import { State } from '../types'
-
+import { useReducer } from 'react'
+import { Action, FromLanguage, Language, State } from '../types'
+import { AUTO_LANGUAGE } from '../constant'
+//creando initialState
 const initialState = {
     fromLanguage:'auto',
     toLanguage: 'en',
@@ -7,14 +9,17 @@ const initialState = {
     result: '',
     loading: false
   }
+  //2. Creando reducer
+  function reducer (state: State, action: Action) {
+    const {type} = action
   
-  function reducer (state: State, action) {
-    const {type, payload} = action
-  
-    if (type === 'INTERCHANge_LANGUAGES') {
+    if (type === 'INTERCHANGE_LANGUAGES') {
+      //logica del reducer
+      if (state.fromLanguage === AUTO_LANGUAGE ) return state
+
       return {
         ... state,
-        fromLanguage: state.toLagnuage,
+        fromLanguage: state.toLanguage,
         toLagnuage: state.fromLanguage
       }
     }
@@ -53,11 +58,11 @@ const initialState = {
     return state
   
   }
-
+// 3. hook
   export function useStore () {
     const [{
         fromLanguage,
-        toLagnuage,
+        toLanguage,
         fromText,
         result,
         loading
@@ -67,29 +72,33 @@ const initialState = {
       dispatch({ type: 'INTERCHANGE_LANGUAGES'})
     }
 
-    const setFromLanguage = (payload: string) => {
-      dispatch ({ type: 'SET_FROM_LANGUAGE', payload: 'es'})
+    const setFromLanguage = (payload: FromLanguage) => {
+      dispatch ({ type: 'SET_FROM_LANGUAGE', payload})
     }
 
-    const setToLanguage = ( payload: string) => {
-      dispatch({ type: 'SET_TO_LANGUAGE'})
+    const setToLanguage = ( payload: Language) => {
+      dispatch({ type: 'SET_TO_LANGUAGE', payload})
     }
 
     const setFromText = (payload: string) => {
-      dispatch({ type: 'SET_FROM_TEXT'})
+      dispatch({ type: 'SET_FROM_TEXT', payload})
     }
 
     const setResult = (payload: string) => {
-      dispatch({ type: 'SET_RESULT'})
+      dispatch({ type: 'SET_RESULT', payload})
     }
  
     return{
       fromLanguage,
-      toLagnuage,
+      toLanguage,
       fromText,
       result,
       loading,
       interchangeLanguages,
+      setFromLanguage,
+      setToLanguage,
+      setFromText,
+      setResult
       
     }
   
