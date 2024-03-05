@@ -6,10 +6,11 @@ import './App.css'
 import { useStore } from './hooks/useStore';
 import {ArrowsIcon} from './components/Icons'
 import { AUTO_LANGUAGE } from './constant';
+import { LanguageSelector } from './components/LanguageSelector';
 
 
 function App(){
-  const { toLanguage, fromLanguage, interchangeLanguages } = useStore()
+  const { toLanguage, fromLanguage, interchangeLanguages, setFromLanguage, setToLanguage} = useStore()
 
   return (
       <Container fluid>
@@ -18,8 +19,7 @@ function App(){
 
         <Row>
           <Col>
-          <h2>From</h2>
-          {fromLanguage}
+          <LanguageSelector onChange={setFromLanguage} />
           </Col>
 
           <Col>
@@ -29,8 +29,7 @@ function App(){
             </Col>
 
           <Col>
-          <h2> To </h2>
-          {toLanguage}
+          <LanguageSelector onChange={setToLanguage}/>
           </Col>
         </Row>
 
